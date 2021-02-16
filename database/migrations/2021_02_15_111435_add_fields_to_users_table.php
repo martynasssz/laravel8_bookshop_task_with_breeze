@@ -14,7 +14,7 @@ class AddFieldsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) { //additional fields to user table
-            $table->boolean('is_admin')->defaul(false);
+            $table->boolean('is_admin')->default(false);
             $table->date('birth_date')->nullable(); // nullable() meant what field this field will be not required in form, in the db it will be null
 
 
