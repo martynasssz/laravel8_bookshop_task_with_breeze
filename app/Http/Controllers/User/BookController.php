@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBookRequest;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use App\Models\Author;
+use App\Models\Book;
+use App\Http\Controllers\User\Srt;
 
 class BookController extends Controller
 {
@@ -15,7 +19,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = auth()->user()->books()->get();
+        return view('user.books.index', compact('books'));
     }
 
     /**
@@ -36,9 +41,26 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+   
+    public function store(StoreBookRequest $request)  //validation in form request files
     {
-        //
+        //if validation is ok, next step
+
+        //is using has many ralationshiop //auth()->user() is user model of logged user // then using books() relationship and making create
+        $book = auth()->user()->books()->create($request->validated()); 
+        //genres come as array and making attach with many to many realationship
+        $book->genres()->attach($request->input('genres'));
+        //authors are comma separated
+        //foreaching are doing for every author 
+        $authors = explode(",", $request->input('genres'));
+        foreach ($authors as $authorName) {
+            $author = Author::updateOrCreate(['name' => $authorName]); //make author // updateOrCreate is Eloquent function which updating existing author or create new one and when book is attach to author 
+            $book->authors()->attach($author->id); //author attached to books
+        }
+      //  $slug->slug = Str::of($request->title)->slug('-');
+
+        return redirect()->route('user.books.index')->with('message', 'Book created succefully'); //session massage in blade
+
     }
 
     /**

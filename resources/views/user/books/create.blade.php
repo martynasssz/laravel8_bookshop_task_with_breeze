@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Add  a new book') }}  {{-- title --}}
+            {{ __('Add a new book') }}  {{-- title --}}
         </h2>
     </x-slot>
 
@@ -9,8 +9,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <x-auth-validation-errors class="mb-4" :errors="$errors" />{{-- for validation error showing --}}
+
                     {{-- form starting --}}
-                    <form action="{{ route('user.books.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('user.books.store') }}" method="POST" enctype="multipart/form-data"> 
                         @csrf
             
                         <!-- Title -->
@@ -33,9 +35,10 @@
                             <x-label for="genres" :value="__('Genres')" />
         
                             @foreach ($genres as $genre) <!-- from bookcontroller compact() -->
-                                <input type="checkbox" name="genres[]" value="{{ $genre->id }}" />
+                                <input type="checkbox" name="genres[]" value="{{ $genre->id }}" 
+                                @if (in_array($genre->id, old('genres',[]))) checked @endif />  {{-- genres should be checked if valination fail and is old array --}}                              
                                 {{$genre->name }} <!-- genre name from genre table -->
-                                <br />
+                                 <br />
                             @endforeach                            
                         </div>                       
 
@@ -54,7 +57,7 @@
                             <x-input id="price" class="block mt-1 w-full" type="number" name="price" :value="old('price')" required />
                         </div>
 
-                        <!-- Price -->
+                        <!-- Files upload -->
                         
                         <div div class="mt-4">
                             <x-label for="cover" :value="__('Cover Photo')" />
