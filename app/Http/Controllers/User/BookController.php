@@ -47,7 +47,10 @@ class BookController extends Controller
         //if validation is ok, next step
 
         //is using has many ralationshiop //auth()->user() is user model of logged user // then using books() relationship and making create
-        $book = auth()->user()->books()->create($request->validated()); 
+        $validatedRequest = $request->validated(); 
+        $validatedRequest['slug'] = Str::slug($request->title);
+
+        $book = auth()->user()->books()->create($validatedRequest); 
         //genres come as array and making attach with many to many realationship
         $book->genres()->attach($request->input('genres'));
         //authors are comma separated
@@ -56,12 +59,10 @@ class BookController extends Controller
         foreach ($authors as $authorName) {
             $author = Author::updateOrCreate(['name' => $authorName]); //make author // updateOrCreate is Eloquent function which updating existing author or create new one and when book is attach to author 
             $book->authors()->attach($author->id); //author attached to books
-        }
-        $slug = Str::of($request->title)->slug('-');
+        }        
 
         return redirect()->route('user.books.index')->with('message', 'Book created succefully'); //session massage in blade
-
-        Book::insert(['slug' => Str::of($request->title)->slug('-')]);
+        
     }
 
     /**
