@@ -8,7 +8,7 @@ use App\Models\Genre;
 use Illuminate\Http\Request;
 use App\Models\Author;
 use App\Models\Book;
-use App\Http\Controllers\User\Srt;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -52,15 +52,16 @@ class BookController extends Controller
         $book->genres()->attach($request->input('genres'));
         //authors are comma separated
         //foreaching are doing for every author 
-        $authors = explode(",", $request->input('genres'));
+        $authors = explode(",", $request->input('authors')); //every author will be in array
         foreach ($authors as $authorName) {
             $author = Author::updateOrCreate(['name' => $authorName]); //make author // updateOrCreate is Eloquent function which updating existing author or create new one and when book is attach to author 
             $book->authors()->attach($author->id); //author attached to books
         }
-      //  $slug->slug = Str::of($request->title)->slug('-');
+        $slug = Str::of($request->title)->slug('-');
 
         return redirect()->route('user.books.index')->with('message', 'Book created succefully'); //session massage in blade
 
+        Book::insert(['slug' => Str::of($request->title)->slug('-')]);
     }
 
     /**
