@@ -20,6 +20,7 @@ class BookController extends Controller
     public function index()
     {
         $books = auth()->user()->books()->get();
+        //$truncated = Str::limit($books, 5, ' (...)');        
         return view('user.books.index', compact('books'));
     }
 

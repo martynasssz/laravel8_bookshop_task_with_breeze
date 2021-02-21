@@ -14,9 +14,12 @@ class GenreSeeder extends Seeder
      */
     public function run()  //create manual genres
     {
-        Genre::create(['name' => 'Detective']);  //create name in Gene db table
-        Genre::create(['name' => 'Science Fiction']);
-        Genre::create(['name' => 'Romance']);
+        Genre::factory()->times(30)->create();
+        
+        
+        // Genre::create(['name' => 'Detective']);  //create name in Gene db table
+        // Genre::create(['name' => 'Science Fiction']);
+        // Genre::create(['name' => 'Romance']);
 
     }
 }
