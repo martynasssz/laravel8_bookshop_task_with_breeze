@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function(){ //grouping routes because use
     Route::group(['prefix' => 'user', 'as' =>'user.'], function(){ //separate route group for books
         Route::resource('books', \App\Http\Controllers\User\BookController::class);  //controller in subfolder user     
     });
+    
 });
 
 

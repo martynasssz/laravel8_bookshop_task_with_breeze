@@ -6,7 +6,6 @@ use App\Models\Book;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class BookFactory extends Factory
 {
     /**
@@ -22,10 +21,10 @@ class BookFactory extends Factory
      * @return array
      */
     public function definition()
-    {                
+    {
         return [
             'title' => $this->faker->text(30),
-            'price' => $this->faker->randomFloat(2, 0, 5000),
+            'price' => $this->faker->randomFloat(2, 0, 100),
             'slug' => $this->faker->unique()->slug,
             'discount' =>  $this->faker->boolean ? $this->faker->numberBetween(1, 100): 0,
             'description' => $this->faker->paragraph,           

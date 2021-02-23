@@ -38,7 +38,7 @@
                                     <div class="flex items-center justify-between leading-tight p-2 md:p-2">
                                         @foreach ($book->genres as $genre)
                                         <a class="no-underline hover:underline text-black"  href="#">
-                                            {{ Illuminate\Support\Str::limit($genre->name, 13, $end='...') }} {{-- limit 5 --}}                                              
+                                            {{ Illuminate\Support\Str::limit($genre->name, 10, $end='...') }} {{-- limit 5 --}}                                              
                                             
                                         </a>
                                         @endforeach
@@ -53,7 +53,7 @@
                                                 src="https://picsum.photos/32/32/?random"> --}}
                                            @foreach ($book->authors as $author)
                                                 <p class="ml-0 text-sm font-bold">
-                                                 {{ $author->name }}
+                                                    {{ Illuminate\Support\Str::limit($author->name, 14, $end='...') }}
                                                 </p>
                                             @endforeach
                                         </a>                               
