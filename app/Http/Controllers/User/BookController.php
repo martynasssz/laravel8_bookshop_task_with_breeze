@@ -49,9 +49,11 @@ class BookController extends Controller
 
         //is using has many ralationshiop //auth()->user() is user model of logged user // then using books() relationship and making create
         $validatedRequest = $request->validated(); 
-        $validatedRequest['slug'] = Str::slug($request->title);
+        //$validatedRequest['slug'] = Str::slug($request->title);
+        //$book = auth()->user()->books()->create($validatedRequest); 
 
-        $book = auth()->user()->books()->create($validatedRequest); 
+        $book = auth()->user()->books()->create($request->validated()); 
+
         //genres come as array and making attach with many to many realationship
         $book->genres()->attach($request->input('genres'));
         //authors are comma separated
@@ -62,7 +64,7 @@ class BookController extends Controller
             $book->authors()->attach($author->id); //author attached to books
         }        
 
-        return redirect()->route('user.books.index')->with('message', 'Book created succefully'); //session massage in blade
+        return redirect()->route('user.books.index', $book)->with('message', 'Book created succefully'); //session massage in blade
         
     }
 
@@ -72,9 +74,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        
+        return view('user.books.index', compact('books'));
     }
 
     /**

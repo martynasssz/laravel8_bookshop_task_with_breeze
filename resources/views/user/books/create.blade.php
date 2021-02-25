@@ -32,16 +32,18 @@
             
                         <!-- Genres -->
                         <div class="mt-4">
-                            <x-label for="genres" :value="__('Genres')" />
-        
-                            @foreach ($genres as $genre) <!-- from bookcontroller compact() -->
-                                <input type="checkbox" name="genres[]" value="{{ $genre->id }}" 
-                                @if (in_array($genre->id, old('genres',[]))) checked @endif />  {{-- genres should be checked if valination fail and is old array --}}                              
-                                {{$genre->name }} <!-- genre name from genre table -->
-                                 <br />
-                            @endforeach                            
+                            <x-label class="block" for="genres" :value="__('Genres')" />
+                            
+                            <select class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full form-multiselect" name="genres[]">
+                                @foreach ($genres as $genre) <!-- from bookcontroller compact() -->
+                                <option value="{{ $genre->id }}">{{$genre->name }}</option>                                                                            
+                               
+                                @endforeach 
+                            </select>           
+                                                  
                         </div>                       
-
+                      
+                       
                         <!-- Descripion -->
                         <div class="mt-4">
                             <x-label for="description" :value="__('Description')" />
