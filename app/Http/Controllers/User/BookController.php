@@ -64,7 +64,7 @@ class BookController extends Controller
             $book->authors()->attach($author->id); //author attached to books
         }        
 
-        return redirect()->route('user.books.index', $book)->with('message', 'Book created succefully'); //session massage in blade
+        return redirect()->route('user.books.show', $book)->with('message', 'Book created succefully'); //session massage in blade
         
     }
 
@@ -76,7 +76,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('user.books.index', compact('books'));
+        return view('user.books.show', compact('book'));
+       // return $book->title;
     }
 
     /**

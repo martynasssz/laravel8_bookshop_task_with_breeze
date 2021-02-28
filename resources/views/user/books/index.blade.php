@@ -22,7 +22,7 @@
                                 <!-- Article -->
                                 <article class="overflow-hidden rounded-lg shadow-lg">
 
-                                    <a href="#">
+                                    <a href="{{ route('user.books.show', $book) }}">
                                         <img alt="Placeholder" class="block h-auto w-full"
                                             src="https://picsum.photos/600/400/?random">
                                     </a>
@@ -37,7 +37,7 @@
 
                                     <div class="flex items-center justify-between leading-tight p-2 md:p-2">
                                         @foreach ($book->genres as $genre)
-                                        <a class="no-underline hover:underline text-black"  href="#">
+                                        <a class="no-underline hover:underline text-black"  href="{{ route('user.books.show', $book) }}">
                                             {{ Illuminate\Support\Str::limit($genre->name, 10, $end='...') }} {{-- limit 5 --}}                                              
                                             
                                         </a>
@@ -68,6 +68,8 @@
                                         <p class="text-center text-2xl font-bold  ">{{ $book->price }} Eur</p>
                                         <p class="text-center">-{{ $book->discount }}%</p>                                        
                                     </div>
+
+                                    {{-- all users sratings --}}
 
                                     <div class="flex justify-center items-center">
                                         <div class="flex items-center mt-2 mb-4">
