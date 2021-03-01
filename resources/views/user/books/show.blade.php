@@ -44,8 +44,8 @@
                                         @endforeach                                        
                                     </h1>         
                                                                    
-                                </div>
-                                <div class="grid grid-cols-2 divide-x text-bold py-3 mb-4 "> 
+                                </div>ivide-x
+                                <div class="grid grid-cols-2 d text-bold py-3 mb-4 "> 
                                     <p class="text-center text-2xl font-bold  ">{{ $book->price }} Eur</p>
                                     <p class="text-center">-{{ $book->discount }}%</p>                                        
                                 </div>
