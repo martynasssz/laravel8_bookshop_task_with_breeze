@@ -46,8 +46,8 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)  //validation in form request files
     {
         //if validation is ok, next step
-
         //is using has many ralationshiop //auth()->user() is user model of logged user // then using books() relationship and making create
+          
         $validatedRequest = $request->validated(); 
         //$validatedRequest['slug'] = Str::slug($request->title);
         //$book = auth()->user()->books()->create($validatedRequest); 
@@ -62,6 +62,16 @@ class BookController extends Controller
         foreach ($authors as $authorName) {
             $author = Author::updateOrCreate(['name' => $authorName]); //make author // updateOrCreate is Eloquent function which updating existing author or create new one and when book is attach to author 
             $book->authors()->attach($author->id); //author attached to books
+
+            
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover')->getClientOriginalName();
+            $request->file('cover')
+                ->storeAs('books/'.$book->id, $image); //store('books') image will be stored in this folder
+            $book->update(['cover' =>$image]);    
+            }         
+
+
         }        
 
         return redirect()->route('user.books.show', $book)->with('message', 'Book created succefully'); //session massage in blade

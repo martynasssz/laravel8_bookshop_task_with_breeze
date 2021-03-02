@@ -12,7 +12,9 @@
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />{{-- for validation error showing --}}
 
                     {{-- form starting --}}
-                    <form action="{{ route('user.books.store') }}" method="POST" enctype="multipart/form-data"> 
+                    <form method="POST" 
+                        action="{{ route('user.books.store') }}"  
+                        enctype="multipart/form-data"> 
                         @csrf
             
                         <!-- Title -->
